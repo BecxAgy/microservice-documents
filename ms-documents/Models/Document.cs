@@ -13,6 +13,6 @@ namespace ms_documents.Models
         public string? name { get; set; } = null;
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime? created_at { get; set; }   
-        public byte[] file { get; set; } 
+        public string? file { get; set; } 
     }
 }
