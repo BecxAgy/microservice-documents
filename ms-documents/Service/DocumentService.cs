@@ -1,4 +1,5 @@
 ﻿
+using ms_documents.DTOs;
 using  ms_documents.Models; 
 using  ms_documents.Repository;
 
@@ -37,6 +38,34 @@ namespace  ms_documents .Service
         public async Task DeleteDocumentAsync(string id)
         {
             await _repository.DeleteAsync(id);
+        }
+        public async Task<Document> CreateDocumentByDTOAsync(DocumentUploadDTO model)
+        {
+            if (model.File == null || model.File.Length == 0)
+            {
+                throw new ArgumentException("Arquivo inválido ou vazio.");
+            }
+
+            byte[] fileBytes = await ProcessFileAsync(model.File);
+
+            var document = new Document
+            {
+                Name = model.Name,
+                Created_at = DateTime.Now,
+                File = fileBytes
+            };
+
+            await _repository.CreateAsync(document);
+            return document;
+        }
+
+        private async Task<byte[]> ProcessFileAsync(IFormFile file)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                await file.CopyToAsync(memoryStream);
+                return memoryStream.ToArray();
+            }
         }
     }
 }

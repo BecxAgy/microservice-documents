@@ -10,9 +10,10 @@ namespace ms_documents.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string? id {  get; set; }
         [BsonElement("Name")]
-        public string? name { get; set; } = null;
+        public string? Name { get; set; } = null;
+        [BsonElement("created_at")]
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
-        public DateTime? created_at { get; set; }   
-        public string? file { get; set; } 
+        public DateTime? Created_at { get; set; }   
+        public byte[] File { get; set; } 
     }
 }

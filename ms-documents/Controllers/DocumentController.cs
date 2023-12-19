@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using ms_documents.Models; // Importe os modelos necessários
 using ms_documents.Service;
 using Microsoft.AspNetCore.Mvc;
+using ms_documents.DTOs;
 
 namespace ms_documents.Controllers
 {
@@ -36,9 +37,9 @@ namespace ms_documents.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Document>> Create([FromBody] Document document)
+        public async Task<ActionResult<Document>> Create([FromForm] DocumentUploadDTO document)
         {
-            var createdDocument = await _documentService.CreateDocumentAsync(document);
+            var createdDocument = await _documentService.CreateDocumentByDTOAsync(document);
             return CreatedAtAction(nameof(GetById), new { id = createdDocument.id }, createdDocument);
         }
 
